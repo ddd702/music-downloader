@@ -1,21 +1,37 @@
 <script setup>
-import { CloudDownload, StarOutline, Star } from '@vicons/ionicons5';
+import { CloudDownload, StarOutline, Star, Headset } from '@vicons/ionicons5';
 import { useSysStore } from '@/stores/sys';
+import { defineEmits } from 'vue';
 
-defineProps({
+const props = defineProps({
   item: {
     type: Object,
     default: null
   }
 });
+const emit = defineEmits(['play', 'download']);
 const sysStore = useSysStore();
 const toggleStar = (item) => {
   sysStore.updateStar(item);
 };
+const onPlay = () => {
+  // console.warn('props', props.item);
+  emit('play', props.item);
+};
+const onDownload = () => {
+  window.App.downloadSong({
+    url: props.item.url,
+    name: props.item.name
+  });
+  emit('download', props.item);
+};
 </script>
 <template>
   <section class="result-item">
-    <n-icon style="cursor: pointer" size="20"><CloudDownload /></n-icon>
+    <template v-if="item.url">
+      <n-icon @click="onDownload" style="cursor: pointer" size="20"><CloudDownload /></n-icon>
+      <n-icon @click="onPlay" style="cursor: pointer; margin: 0 10px" size="20"><Headset /></n-icon>
+    </template>
     <n-icon style="cursor: pointer; margin: 0 10px" size="20" @click="toggleStar(item)">
       <Star v-if="item.starred" />
       <StarOutline v-else />

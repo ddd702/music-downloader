@@ -4,6 +4,8 @@ import { useMessage } from 'naive-ui';
 import { computed, reactive, ref } from 'vue';
 import ResItem from '../components/ResItem.vue';
 import { useSysStore } from '@/stores/sys';
+import { usePlayerStore } from '@/stores/player';
+const playerStore = usePlayerStore();
 
 const sysStore = useSysStore();
 const loading = ref(false);
@@ -50,6 +52,19 @@ const fetchData = async () => {
   }
   loading.value = false;
 };
+const onPlay = (item) => {
+  // console.warn('onPlay', item);
+  playerStore.setPlayer(item);
+};
+const onDownload = (item) => {
+  console.warn('onDownload', item.size);
+  window.App.onDownloadProcess((event, res) => {
+    console.warn('onDownloading', res);
+    if (res.done) {
+      $message.success(`${item.name}:下载成功!`);
+    }
+  });
+};
 </script>
 
 <template>
@@ -90,7 +105,13 @@ const fetchData = async () => {
     <section v-if="result.total" class="result-box">
       <n-spin :show="loading">
         <div class="result-list">
-          <ResItem v-for="(item, index) in result.list" :key="index" :item="item" />
+          <ResItem
+            v-for="(item, index) in result.list"
+            @download="onDownload"
+            @play="onPlay"
+            :key="index"
+            :item="item"
+          />
         </div>
       </n-spin>
       <section class="pagination">
@@ -130,7 +151,7 @@ const fetchData = async () => {
   padding: 10px 20px;
 }
 .tip {
-  color: blue;
+  color: gray;
   margin: 10px 0;
 }
 </style>

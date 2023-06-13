@@ -6,9 +6,13 @@ import { darkTheme, NIcon } from 'naive-ui';
 import { InformationCircle, Settings, ListCircle } from '@vicons/ionicons5';
 import TopBar from '@/components/TopBar.vue';
 import { useSysStore } from '@/stores/sys';
+import { usePlayerStore } from '@/stores/player';
 import router from '@/router';
+import AudioPlayer from 'vue3-audio-player';
+import 'vue3-audio-player/dist/style.css';
 
 const sysStore = useSysStore();
+const playerStore = usePlayerStore();
 const theme = computed(() => {
   return sysStore.isDarkMode ? darkTheme : null;
 });
@@ -19,7 +23,7 @@ const themeOverrides = {
   // }
 };
 const renderIcon = (icon) => {
-  return () => h(NIcon, null, { default: () => h(icon) });
+  return () => h(NIcon, { size: 25 }, { default: () => h(icon) });
 };
 const menuOptions = [
   {
@@ -65,7 +69,8 @@ const menuOptions = [
     icon: renderIcon(InformationCircle)
   }
 ];
-const collapsed = ref(true);
+const collapsed = ref(false);
+const $player = ref(null);
 const cacheRoutes = (() => {
   const output = [];
   router.getRoutes().map((item) => {
@@ -75,6 +80,15 @@ const cacheRoutes = (() => {
   });
   return output;
 })();
+playerStore.$subscribe(
+  (mutation) => {
+    $player.value.play();
+    if (mutation.type === 'direct') {
+      $player.value.play();
+    }
+  },
+  { detached: false }
+);
 </script>
 
 <template>
@@ -87,22 +101,16 @@ const cacheRoutes = (() => {
         @expand="collapsed = false"
         collapse-mode="width"
         :collapsed-width="75"
-        :width="150"
-        show-trigger="arrow-circle"
+        :width="170"
         bordered
       >
         <TopBar />
         <n-menu :collapsed="collapsed" :collapsed-width="75" :collapsed-icon-size="30" :options="menuOptions" />
+        <AudioPlayer ref="$player" :option="playerStore.playerOpts" />
       </n-layout-sider>
       <n-layout-content content-style="height:100vh;over-flow-y:auto;">
         <TopBar hasBg />
         <main class="main-container">
-          <!-- <header>
-            <div class="wrapper">
-              <n-button @click="openToolDev">打开devtool{{ sysStore.version }}</n-button>
-              <n-button @click="themeToggle">主题toggle</n-button>
-            </div>
-          </header> -->
           <n-message-provider>
             <RouterView v-slot="{ Component }">
               <KeepAlive :include="cacheRoutes">
@@ -120,5 +128,16 @@ const cacheRoutes = (() => {
 #app {
   height: 100vh;
   width: 100vw;
+}
+.audio__player-title {
+  color: var(--n-text-color) !important;
+}
+.audio__player-play {
+  text-align: center !important;
+}
+.audio__player-play-icon {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
 }
 </style>

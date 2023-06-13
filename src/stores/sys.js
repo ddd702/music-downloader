@@ -53,5 +53,14 @@ export const useSysStore = defineStore('sys', () => {
     defaultOrigin.value = value;
     localStorage.setItem('defaultOrigin', value);
   }
-  return { isDarkMode, defaultOrigin, updateStar, starList, setDefaultOrigin, version, originList, setDarkMode };
+  return {
+    isDarkMode,
+    defaultOrigin,
+    updateStar,
+    starList,
+    setDefaultOrigin,
+    version,
+    originList,
+    setDarkMode
+  };
 });

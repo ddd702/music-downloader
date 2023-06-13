@@ -9,6 +9,8 @@ contextBridge.exposeInMainWorld('App', {
   getIsDarkMode:()=> ipcRenderer.invoke('themeMode:get'),
   openDevTool: () => ipcRenderer.send('openDevTool'),
   toggleThemeMode:()=> ipcRenderer.invoke('themeMode:toggle'),
-  searchSong:(args)=> ipcRenderer.invoke('search:song',args)
+  searchSong:(args)=> ipcRenderer.invoke('search:song',args),
+  downloadSong:(args)=> ipcRenderer.send('download:song',args),
+  onDownloadProcess:(callback) => ipcRenderer.on('download:process', callback)
   // we can also expose variables, not just functions
 })

@@ -42,7 +42,8 @@
     "pinia": "^2.0.36",
     "sass": "^1.63.3",
     "vue": "^3.3.2",
-    "vue-router": "^4.2.0"
+    "vue-router": "^4.2.0",
+    "vue3-audio-player": "^1.0.7"
   },
   "devDependencies": {
     "@electron-internal/eslint-config": "^1.0.1",

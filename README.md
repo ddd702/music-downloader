@@ -1,5 +1,7 @@
 # Music-Downloader
+#### 此项目仅供个人学习研究，严禁用于商业用途，侵删
 🎵 一个可播放及下载高品质音乐的多平台软体，使用electron，音乐来源: 酷我、酷狗、网易云和咪咕（API 是从公开的网络中获得）
+
 
 ## 推荐的IDE设置
 
@@ -13,3 +15,4 @@
 在当前项目目录下打开终端键入：
 
     cd public && electron-icon-maker --input=appicon.png --output=./
+
