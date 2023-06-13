@@ -1,0 +1,67 @@
+{
+  "private": true,
+  "name": "music-downloader",
+  "version": "1.0.1",
+  "description": "一个可播放及下载高品质音乐的工具",
+  "main": "electron/main.js",
+  "author": "ddd",
+  "license": "MIT",
+  "build": {
+    "appId": "com.music-downloader.desktop",
+    "productName": "音乐下载器",
+    "directories": {
+      "output": "dist-release"
+    },
+    "win": {
+      "icon": "public/icons/win/icon.ico",
+      "target": [
+        "portable"
+      ]
+    },
+    "mac": {
+      "icon": "public/icons/mac/icon.icns",
+      "target": [
+        "dmg"
+      ]
+    }
+  },
+  "scripts": {
+    "appdev": "electron .",
+    "appbuild:mac": "vite build && electron-builder -m",
+    "appbuild:win": "vite build && electron-builder -w",
+    "apppack": "vite build && electron-builder --dir",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "@vueuse/core": "^10.1.2",
+    "electron-store": "^8.1.0",
+    "pinia": "^2.0.36",
+    "sass": "^1.63.3",
+    "vue": "^3.3.2",
+    "vue-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "@electron-internal/eslint-config": "^1.0.1",
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@vicons/ionicons5": "^0.12.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "electron": "^25.0.0",
+    "electron-builder": "^23.6.0",
+    "electron-devtools-installer": "^3.2.0",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.11.0",
+    "naive-ui": "^2.34.4",
+    "prettier": "^2.8.8",
+    "vfonts": "^0.0.3",
+    "vite": "^4.3.5",
+    "vite-plugin-electron": "^0.11.2"
+  }
+}
