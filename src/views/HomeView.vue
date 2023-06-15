@@ -203,6 +203,7 @@ const onDownload = (item) => {
 .pagination {
   padding: 10px 20px;
   position: absolute;
+  z-index: 2;
   bottom: 0;
   left: 0;
   background-color: var(--n-color);

@@ -1,5 +1,4 @@
 const { net } = require('electron')
-const {removePunctuation,joinSingersName} = require('../utils')
 
 const urls=[
   //https://pd.musicapp.migu.cn/MIGUM3.0/v1.0/content/search_all.do?text=jay&pageNo=20&pageSize=20&searchSwitch={song:1}

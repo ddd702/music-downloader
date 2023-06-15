@@ -1,7 +1,8 @@
 const { ipcMain,BrowserWindow,dialog,shell, nativeTheme,app,clipboard } = require('electron')
 const Store = require('electron-store')
 const path = require('path');
-const Migu  = require('./migu')
+const Migu  = require('./migu');
+const Kuwo = require('./kuwo');
 
 const store = new Store()
 function getDownLoadPath(){
@@ -83,6 +84,9 @@ module.exports={
       switch(args.origin){
         case 'migu':
           result = await Migu.search(args);
+          break;
+        case 'kuwo':
+          result = await Kuwo.search(args);
           break;
       }
       //console.warn('search:song start',args,result)

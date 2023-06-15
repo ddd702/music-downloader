@@ -43,7 +43,7 @@ const onDownloadLrc = () => {
 </script>
 <template>
   <section class="result-item">
-    <template v-if="item.url">
+    <template v-if="item.url && !item.disabled">
       <span style="cursor: pointer" title="下载歌曲"
         ><n-icon @click="onDownload" size="20"><CloudDownload /></n-icon
       ></span>
@@ -53,18 +53,21 @@ const onDownloadLrc = () => {
       <span style="cursor: pointer; margin-left: 10px" title="试听">
         <n-icon @click="onPlay" style="cursor: pointer" size="20"><Headset /></n-icon>
       </span>
+      <span style="cursor: pointer; margin: 0 10px" title="收藏">
+        <n-icon size="20" @click="toggleStar(item)">
+          <Star v-if="isStarred" />
+          <StarOutline v-else />
+        </n-icon>
+      </span>
     </template>
-    <span style="cursor: pointer; margin: 0 10px" title="收藏">
-      <n-icon size="20" @click="toggleStar(item)">
-        <Star v-if="isStarred" />
-        <StarOutline v-else />
-      </n-icon>
-    </span>
-    <n-image width="100" :src="item.cover" />
+    <n-image width="70" :src="item.cover" />
     <p :title="item.name" class="song-name">
       {{ item.name }}
     </p>
-    <span>{{ Utils.byteConvert(item.size) }}</span>
+    <n-tag type="info" :bordered="false">
+      {{ item.origin }}
+    </n-tag>
+    <span style="margin-left: 5px">{{ Utils.byteConvert(item.size) }}</span>
   </section>
 </template>
 <style lang="scss" scoped>
