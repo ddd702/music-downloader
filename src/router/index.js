@@ -22,6 +22,14 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
+      path: '/star',
+      name: 'StarView',
+      meta: {
+        cache: false
+      },
+      component: () => import('../views/StarView.vue')
+    },
+    {
       path: '/setting',
       name: 'SettingView',
       meta: {

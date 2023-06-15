@@ -3,7 +3,7 @@ import { ref, computed, h } from 'vue';
 
 import { RouterLink, RouterView } from 'vue-router';
 import { darkTheme, NIcon } from 'naive-ui';
-import { InformationCircle, Settings, ListCircle } from '@vicons/ionicons5';
+import { InformationCircle, Settings, ListCircle, Star } from '@vicons/ionicons5';
 import TopBar from '@/components/TopBar.vue';
 import { useSysStore } from '@/stores/sys';
 import { usePlayerStore } from '@/stores/player';

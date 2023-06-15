@@ -1,7 +1,8 @@
 <script setup>
-import { CloudDownload, StarOutline, Star, Headset } from '@vicons/ionicons5';
+import { ref } from 'vue';
+import { CloudDownload, StarOutline, Star, Headset, DocumentText } from '@vicons/ionicons5';
 import { useSysStore } from '@/stores/sys';
-import { defineEmits } from 'vue';
+import Utils from '@/utils';
 
 const props = defineProps({
   item: {
@@ -11,35 +12,59 @@ const props = defineProps({
 });
 const emit = defineEmits(['play', 'download']);
 const sysStore = useSysStore();
+const isStarred = ref(false);
+const getIsStarred = () => {
+  isStarred.value = Object.hasOwn(sysStore.starList, props.item.id);
+};
+getIsStarred();
 const toggleStar = (item) => {
   sysStore.updateStar(item);
+  setTimeout(getIsStarred, 200);
 };
 const onPlay = () => {
   // console.warn('props', props.item);
   emit('play', props.item);
 };
 const onDownload = () => {
-  window.App.downloadSong({
+  emit('download', {
     url: props.item.url,
-    name: props.item.name
+    name: props.item.name,
+    size: props.item.size
   });
-  emit('download', props.item);
+  // emit('download', props.item);
+};
+const onDownloadLrc = () => {
+  emit('download', {
+    url: props.item.lrc,
+    name: props.item.lrcName,
+    size: 1024 * 5 //没有歌词文件大小，就默认为5k吧
+  });
 };
 </script>
 <template>
   <section class="result-item">
     <template v-if="item.url">
-      <n-icon @click="onDownload" style="cursor: pointer" size="20"><CloudDownload /></n-icon>
-      <n-icon @click="onPlay" style="cursor: pointer; margin: 0 10px" size="20"><Headset /></n-icon>
+      <span style="cursor: pointer" title="下载歌曲"
+        ><n-icon @click="onDownload" size="20"><CloudDownload /></n-icon
+      ></span>
+      <span v-if="item.lrc" style="cursor: pointer; margin-left: 10px" title="下载歌词"
+        ><n-icon @click="onDownloadLrc" size="20"> <DocumentText /> </n-icon>
+      </span>
+      <span style="cursor: pointer; margin-left: 10px" title="试听">
+        <n-icon @click="onPlay" style="cursor: pointer" size="20"><Headset /></n-icon>
+      </span>
     </template>
-    <n-icon style="cursor: pointer; margin: 0 10px" size="20" @click="toggleStar(item)">
-      <Star v-if="item.starred" />
-      <StarOutline v-else />
-    </n-icon>
+    <span style="cursor: pointer; margin: 0 10px" title="收藏">
+      <n-icon size="20" @click="toggleStar(item)">
+        <Star v-if="isStarred" />
+        <StarOutline v-else />
+      </n-icon>
+    </span>
     <n-image width="100" :src="item.cover" />
     <p :title="item.name" class="song-name">
       {{ item.name }}
     </p>
+    <span>{{ Utils.byteConvert(item.size) }}</span>
   </section>
 </template>
 <style lang="scss" scoped>
@@ -55,9 +80,9 @@ const onDownload = () => {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
-  max-width: 500px;
+  max-width: 320px;
   color: #f70;
-  margin: 0 0 0 10px;
+  margin: 0 20px 0 10px;
   line-height: 1.5;
   overflow: hidden;
 }

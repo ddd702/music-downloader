@@ -46,8 +46,9 @@ module.exports = {
               : {}
             const { pathname } = new URL(url || androidUrl || 'https://music.migu.cn/')
             temp.push(Object.assign({
+              lrcName:`${resource.songName}-[${resource.singer||'未知歌手'}].lrc`,
               name:`${resource.songName}-[${resource.singer||'未知歌手'}].${fileType||androidFileType}` 
-            },resource, {
+            }, {
               androidFileType,
               fileType,
               origin:'migu',
