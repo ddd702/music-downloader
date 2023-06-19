@@ -1,8 +1,8 @@
 {
   "private": true,
   "name": "music-downloader",
-  "version": "1.0.1",
-  "description": "一个可播放及下载高品质音乐的工具",
+  "version": "1.0.2",
+  "description": "一个可播放及下载音乐的工具",
   "main": "electron/main.js",
   "author": "ddd",
   "license": "MIT",

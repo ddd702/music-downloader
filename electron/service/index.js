@@ -3,6 +3,8 @@ const Store = require('electron-store')
 const path = require('path');
 const Migu  = require('./migu');
 const Kuwo = require('./kuwo');
+const Kugou = require('./kugou');
+const Wangyi = require('./wangyi');
 
 const store = new Store()
 function getDownLoadPath(){
@@ -87,6 +89,12 @@ module.exports={
           break;
         case 'kuwo':
           result = await Kuwo.search(args);
+          break;
+        case 'kugou':
+          result = await Kugou.search(args);
+          break;
+        case 'wangyi':
+          result = await Wangyi.search(args);
           break;
       }
       //console.warn('search:song start',args,result)

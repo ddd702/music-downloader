@@ -1,6 +1,6 @@
 
 const { net } = require('electron')
-const {getSongSizeByUrl} = require('../utils')
+const {getSongSizeByUrl,getFileType} = require('../utils')
 
 const urls=[
   //https://search.kuwo.cn/r.s?client=kt&all=%E6%99%B4%E5%A4%A9&pn=0&rn=20&vipver=1&ft=music&encoding=utf8&rformat=json&mobi=1`
@@ -8,10 +8,7 @@ const urls=[
   //https://c.musicapp.migu.cn/MIGUM2.0/v1.0/content/resourceinfo.do?copyrightId=${copyrightId}&resourceType=2
   `https://www.kuwo.cn/api/v1/www/music/playUrl`
 ]
-const getFileType = (url)=>{
-  const ext = url.split('.').pop()
-  return ext.toLowerCase()
-}
+
 module.exports = {
   async search(args){
     let output = {}

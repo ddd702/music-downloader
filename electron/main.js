@@ -12,9 +12,10 @@ const createWindow = async () => {
     resizable: false,
     transparent: true
   })
+  loadingWin.show();
   const win = new BrowserWindow({
-    width: 900,
-    height: 600,
+    width: 1000,
+    height: 700,
     movable: true,
     show: false,
     icon: path.resolve(__dirname, '../public/icons/png/16x16.png'),
@@ -25,7 +26,6 @@ const createWindow = async () => {
       preload: path.join(__dirname, 'preload.js')
     }
   });
-  loadingWin.show();
   win.once('ready-to-show', () => {//添加启动动画
     win.show();
     loadingWin.hide();

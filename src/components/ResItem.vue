@@ -50,7 +50,7 @@ const onDownloadLrc = () => {
       <span v-if="item.lrc" style="cursor: pointer; margin-left: 10px" title="下载歌词"
         ><n-icon @click="onDownloadLrc" size="20"> <DocumentText /> </n-icon>
       </span>
-      <span style="cursor: pointer; margin-left: 10px" title="试听">
+      <span style="cursor: pointer; margin-left: 10px" title="播放">
         <n-icon @click="onPlay" style="cursor: pointer" size="20"><Headset /></n-icon>
       </span>
       <span style="cursor: pointer; margin: 0 10px" title="收藏">
@@ -67,6 +67,9 @@ const onDownloadLrc = () => {
     <n-tag type="info" :bordered="false">
       {{ item.origin }}
     </n-tag>
+    <span v-if="item.fragment" style="margin-left: 10px">
+      <n-tag type="error" :bordered="false">仅片段</n-tag>
+    </span>
     <span style="margin-left: 5px">{{ Utils.byteConvert(item.size) }}</span>
   </section>
 </template>

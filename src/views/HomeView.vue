@@ -55,9 +55,9 @@ const fetchData = async () => {
       pageNo: form.pageNo,
       origin: origin.value
     });
-    console.warn('res', res);
     result.value = res;
     form.pageNo = res.args.pageNo;
+
   } catch (error) {
     $message.error('发生了一点错误');
   }
@@ -71,7 +71,6 @@ const onOpenStarList = () => {
   starListShow.value = true;
 };
 window.App.onDownloadProcess((event, res) => {
-  console.warn('onDownloading', res);
   downloadStatus.percent = res.percent;
   downloadStatus.completed = res.done && res.state === 'completed';
   if (res.done) {
@@ -170,7 +169,7 @@ const onDownload = (item) => {
       <p>{{ result.msg || '暂无数据，搜索一下或试试其他的？' }}</p>
     </section>
     <n-modal v-model:show="starListShow">
-      <n-card size="huge" style="width: 730px" title="我的收藏">
+      <n-card size="huge" style="width: 780px" title="我的收藏">
         <p>数量:{{ sysStore.starListArray.length }}</p>
         <n-spin :show="loading">
           <div class="result-list star-list">
