@@ -79,7 +79,7 @@ const onDownloadLrc = () => {
   align-items: center;
   margin: 10px 0;
   padding: 5px 0;
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px dotted #aaa;
 }
 .song-name {
   word-break: break-all;

@@ -22,12 +22,12 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/star',
-      name: 'StarView',
+      path: '/history',
+      name: 'HistoryView',
       meta: {
         cache: false
       },
-      component: () => import('../views/StarView.vue')
+      component: () => import('../views/HistoryView.vue')
     },
     {
       path: '/setting',

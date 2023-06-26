@@ -31,7 +31,7 @@ module.exports={
     })
     ipcMain.on('download:song', (event,args={url:'',name:'',size:100}) => {
       const {url,name,size} = args
-      const filename=name.replaceAll( /\\|\//ig,'\~');
+      const filename=name.split('?')[0].replaceAll( /\\|\//ig,'\~');
       console.warn('filename',filename);
       // console.warn('app.getPath downloads',app.getPath('downloads'),args)
       const webContents = event.sender;
@@ -41,10 +41,10 @@ module.exports={
         const filePath = path.join(getDownLoadPath(), `${filename}`);
         item.setSavePath(filePath);
         item.on('updated', (event, state) => {
-          webContents.send('download:process',{state,done:false,percent:Math.floor((item.getReceivedBytes()/size)*100),filename, received:item.getReceivedBytes()})
+          webContents.send('download:process',{state,done:false,percent:Math.floor((item.getReceivedBytes()/size)*100),filename, received:item.getReceivedBytes(),size})
           if (state === 'interrupted') {
             // console.log('Download is interrupted but can be resumed')
-            webContents.send('download:process',{state,done:true,msg:'下载中断,请重试',filename, percent:0, received:0})
+            webContents.send('download:process',{state,done:true,msg:'下载中断,请重试',filename,size, percent:0, received:0})
           } else if (state === 'progressing') {
             if (item.isPaused()) {
               console.log('Download is paused')
@@ -54,7 +54,7 @@ module.exports={
           }
         })
         item.once('done', (event, state) => {
-          webContents.send('download:process',{state,done:true,filename, percent:100, received:0})
+          webContents.send('download:process',{state,done:true,filename, percent:100,size, received:0})
           if (state === 'completed') {
             console.log('Download successfully')
           } else {

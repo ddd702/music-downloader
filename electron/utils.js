@@ -8,7 +8,7 @@ const joinSingersName = (singers) => {
   return singersNames.join(',')
 }
 const getFileType = (url)=>{
-  const ext = url.split('.').pop()
+  const ext = url.split('.').pop().split('?')[0]
   return ext.toLowerCase()
 }
 const getKgSongReq = (url) =>{

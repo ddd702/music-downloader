@@ -77,7 +77,7 @@ window.App.onDownloadProcess((event, res) => {
     setTimeout(() => {
       downloadIng.value = false;
     }, 1000);
-
+    sysStore.updateHistory(res);
     if (res.state === 'completed') {
       $message.success(`${res.filename}:下载成功!`);
     } else {

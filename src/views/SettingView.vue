@@ -65,6 +65,5 @@ const clipboard = async (text) => {
   align-items: center;
   margin: 1em 0;
   padding-bottom: 10px;
-  border-bottom: 1px solid #e8e8e8;
 }
 </style>

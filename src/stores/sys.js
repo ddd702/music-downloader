@@ -7,10 +7,16 @@ export const useSysStore = defineStore('sys', () => {
   const version = pkgJson.version;
   const isDarkMode = ref(initDarkMode);
   let initStarList = {};
+  let initHistoryList = [];
   try {
     initStarList = JSON.parse(localStorage.getItem('starList') || '{}');
   } catch (e) {
     console.error('initStarList Error parsing');
+  }
+  try {
+    initHistoryList = JSON.parse(localStorage.getItem('historyList') || '[]');
+  } catch (e) {
+    console.error('initHistoryList Error parsing');
   }
   const starList = ref(initStarList);
   const starListArray = computed(() => {
@@ -20,6 +26,7 @@ export const useSysStore = defineStore('sys', () => {
     });
     return output.reverse();
   });
+  const historyList = ref(initHistoryList);
   const downloadPath = ref('');
   const defaultOrigin = ref(localStorage.getItem('defaultOrigin') || 'migu');
   const originList = [
@@ -54,7 +61,24 @@ export const useSysStore = defineStore('sys', () => {
     starList.value = JSON.parse(JSON.stringify(initStarList));
     localStorage.setItem('starList', JSON.stringify(starList.value));
   }
-  updateStar();
+  //updateStar();
+  function updateHistory(value) {
+    if (value) {
+      value.timeStamp = Date.now();
+      value.plat = defaultOrigin.value;
+      value.folder = downloadPath.value;
+      initHistoryList = [value].concat(initHistoryList);
+      if (initHistoryList.length > 1000) {
+        //最多保存1000个数据，多了就删掉
+        initHistoryList.splice(1000);
+      }
+      historyList.value = JSON.parse(JSON.stringify(initHistoryList));
+    } else {
+      initHistoryList = [];
+      historyList.value = [];
+    }
+    localStorage.setItem('historyList', JSON.stringify(historyList.value));
+  }
   function setDarkMode(value) {
     isDarkMode.value = value;
   }
@@ -82,8 +106,10 @@ export const useSysStore = defineStore('sys', () => {
     updateStar,
     getDownloadPath,
     setDownloadPath,
+    updateHistory,
+    historyList,
     starList,
-    starListArray,
+    starListArray, //序列化后的列表
     setDefaultOrigin,
     version,
     originList,

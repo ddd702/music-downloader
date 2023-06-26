@@ -3,7 +3,7 @@ import { ref, computed, h } from 'vue';
 
 import { RouterLink, RouterView } from 'vue-router';
 import { darkTheme, NIcon } from 'naive-ui';
-import { InformationCircle, Settings, ListCircle, Star } from '@vicons/ionicons5';
+import { InformationCircle, Settings, ListCircle, TimeSharp } from '@vicons/ionicons5';
 import TopBar from '@/components/TopBar.vue';
 import { useSysStore } from '@/stores/sys';
 import { usePlayerStore } from '@/stores/player';
@@ -53,6 +53,20 @@ const menuOptions = [
       ),
     key: 'SettingView',
     icon: renderIcon(Settings)
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: 'HistoryView'
+          }
+        },
+        '历史'
+      ),
+    key: 'HistoryView',
+    icon: renderIcon(TimeSharp)
   },
   {
     label: () =>
